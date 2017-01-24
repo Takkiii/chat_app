@@ -7,4 +7,13 @@ export default {
       userID: newUserID,
     })
   },
+
+  sendMessage(userID, message) {
+    Dispatcher.handleViewAction({
+      type: 'sendMessage',
+      userID: userID,
+      message: message,
+      timestamp: +new Date(),
+    })
+  },
 }
