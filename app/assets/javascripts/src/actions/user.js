@@ -34,6 +34,8 @@ export default {
       })
       .end((error, res) => {
         if (!error && res.status === 200) {
+          var redirect_url = 'http://localhost:3000'
+          location.href = redirect_url
         } else {
           reject(res)
         }
