@@ -3,7 +3,7 @@ import _ from 'lodash'
 import classNames from 'classnames'
 // import Utils from '../../utils'
 import UserStore from '../../stores/user'
-import MessagesStore from '../../stores/messages'
+// import MessagesStore from '../../stores/messages'
 import UserAction from '../../actions/user'
 import MessagesAction from '../../actions/messages'
 import MessagesBox from '../../components/messages/messagesBox'
@@ -34,7 +34,7 @@ class UserList extends React.Component {
       })
     })
     return {
-      openChatID: MessagesStore.getOpenChatUserID(),
+      openChatID: UserStore.getOpenChatUserID(),
       messageList: messageList,
       friendships: friendships,
     }
@@ -74,12 +74,12 @@ class UserList extends React.Component {
       return 0
     })
 
-    const friends_list = this.state.friendships.map((user, index) => {
+    const friends_list = friendships.map((user, index) => {
       const itemClasses = classNames({
         'user-list__item': true,
         'clear': true,
         // 'user-list__item--new': isNewMessage,
-        'user-list__item--active': this.state.openChatID === user.id,
+        'user-list__item--active': openChatID === user.id,
       })
       return (
         <li
@@ -164,7 +164,7 @@ class UserList extends React.Component {
             { friends_list }
           </ul>
         </div>
-        <MessagesBox friendships={friendships} openChatID={openChatID}/>,
+        <MessagesBox {...this.state} />,
       </div>
     )
   }

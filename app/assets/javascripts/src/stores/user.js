@@ -83,6 +83,13 @@ class UserStore extends BaseStore {
   setUsers(json) {
     this.set('users', json)
   }
+  getOpenChatUserID() {
+    if (!this.get('openChatUserID')) this.setOpenChatUserID([])
+    return this.get('openChatUserID')
+  }
+  setOpenChatUserID(userID) {
+    this.set('openChatUserID', userID)
+  }
   getAllChats() {
     return all_user
   }
@@ -100,6 +107,7 @@ User.dispatchToken = Dispatcher.register(payload => {
       break
 
     case ActionTypes.GET_FRIENDSHIPS:
+      User.setOpenChatUserID(action.json[0].id)
       User.setUsers(action.json)
       User.emitChange()
       break
