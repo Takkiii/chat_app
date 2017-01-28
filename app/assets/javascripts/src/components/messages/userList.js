@@ -22,7 +22,6 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     const friendships = UserStore.getUsers()
-    console.log(friendships)
     const allMessages = UserStore.getAllChats()
 
     const messageList = []

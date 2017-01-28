@@ -103,6 +103,11 @@ User.dispatchToken = Dispatcher.register(payload => {
       User.setUsers(action.json)
       User.emitChange()
       break
+
+    case ActionTypes.DELETE_FRIENDSHIPS:
+      User.setUsers(action.json)
+      User.emitChange()
+      break
   }
 
   return true
