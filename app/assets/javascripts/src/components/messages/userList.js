@@ -4,7 +4,9 @@ import classNames from 'classnames'
 import Utils from '../../utils'
 import UserStore from '../../stores/user'
 import MessagesStore from '../../stores/messages'
+import UserAction from '../../actions/user'
 import MessagesAction from '../../actions/messages'
+import MessagesBox from '../../components/messages/messagesBox'
 
 class UserList extends React.Component {
 
@@ -18,7 +20,9 @@ class UserList extends React.Component {
   }
 
   getStateFromStore() {
-    const allMessages = MessagesStore.getAllChats()
+    const friendships = UserAction.getFriendships()
+    console.log(friendships)
+    const allMessages = UserStore.getAllChats()
 
     const messageList = []
     _.each(allMessages, (message) => {
@@ -81,7 +85,7 @@ class UserList extends React.Component {
 
       var isNewMessage = false
       if (message.lastAccess.currentUser < message.lastMessage.timestamp) {
-        isNewMessage = message.lastMessage.from !== UserStore.user.id
+        isNewMessage = message.lastMessage.from !== UserStore.getUsers()
       }
 
       const itemClasses = classNames({
@@ -115,10 +119,13 @@ class UserList extends React.Component {
       )
     }, this)
     return (
-      <div className='user-list'>
-        <ul className='user-list__list'>
-          { messages }
-        </ul>
+      <div>
+        <div className='user-list'>
+          <ul className='user-list__list'>
+            { messages }
+          </ul>
+        </div>
+        <MessagesBox />,
       </div>
     )
   }

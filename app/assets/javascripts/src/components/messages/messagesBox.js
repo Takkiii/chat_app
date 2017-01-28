@@ -19,12 +19,10 @@ class MessagesBox extends React.Component {
     return MessagesStore.getChatByUserID(MessagesStore.getOpenChatUserID())
   }
 
-  // ビューが作成されるときには必ずイベントを追加する
   componentWillMount() {
     MessagesStore.onChange(this.onStoreChange.bind(this))
   }
 
-  // ビューが削除されたときにイベントも削除する(イベントが削除されずにエラーになることを防ぐ)
   componentWillUnmount() {
     MessagesStore.offChange(this.onStoreChange.bind(this))
   }
@@ -35,7 +33,7 @@ class MessagesBox extends React.Component {
 
   render() {
     const messagesLength = this.state.messages.length
-    const currentUserID = UserStore.user.id
+    const currentUserID = UserStore.getUsers()
 
     const messages = this.state.messages.map((message, index) => {
       const messageClasses = classNames({
