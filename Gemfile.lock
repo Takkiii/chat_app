@@ -65,6 +65,10 @@ GEM
       uniform_notifier (~> 1.10.0)
     byebug (9.0.5)
     callsite (0.0.11)
+    carrierwave (1.0.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -267,6 +271,7 @@ DEPENDENCIES
   browserify-rails
   bullet
   byebug
+  carrierwave
   coffee-rails (~> 4.1.0)
   devise
   devise-bootstrap-views

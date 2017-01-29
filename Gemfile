@@ -28,6 +28,8 @@ gem 'annotate'
 gem 'ransack'
 # design
 gem 'bootstrap-sass'
+# ImageUpload
+gem 'carrierwave'
 
 
 group :development, :test do

@@ -15,6 +15,14 @@ class Api::MessagesController < ApplicationController
     end
   end
 
+  def upload_image
+    @message = Message.new
+    @message.from_user_id = current_user.id
+    @message.to_user_id = params[:to_user_id]
+    @message.image = params[:image].read
+    p @message
+  end
+
   private
 
   def message_params

@@ -8,7 +8,11 @@ Rails.application.routes.draw do
       end
     end
     resources :friendships, only: [:index, :create, :destroy]
-    resources :messages, only: [:index, :create]
+    resources :messages, only: [:index, :create] do
+      collection do
+        post 'upload_image'
+      end
+    end
   end
 
   # Web App Routing

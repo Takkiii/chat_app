@@ -39,7 +39,27 @@ export default {
     //   timestamp: +new Date(),
     // })
   },
-
+  sendImage(userID, file) {
+    return new Promise((resolve, reject) => {
+      request
+      .post(`${APIEndpoints.SEND_IMAGE}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .field('to_user_id', userID)
+      .attach('image', file, file.name)
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.SEND_IMAGE,
+            userID: userID,
+            json,
+          })
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
   getMessages(userID) {
     return new Promise((resolve, reject) => {
       request
