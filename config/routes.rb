@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       end
     end
     resources :friendships, only: [:index, :create, :destroy]
+    resources :messages, only: [:index, :create]
   end
 
   # Web App Routing

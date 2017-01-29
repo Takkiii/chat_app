@@ -2,6 +2,7 @@ import keyMirror from 'keymirror'
 
 export const ActionTypes = keyMirror({
   SEND_MESSAGE: null,
+  GET_MESSAGE: null,
   UPDATE_OPEN_CHAT_ID: null,
   SEARCH_USERS: null,
   CREATE_FRIENDSHIPS: null,
@@ -19,7 +20,7 @@ const Root = window.location.origin || `${window.location.protocol}//${window.lo
 const APIRoot = `${Root}/api`
 export const APIEndpoints = {
   SEND_MESSAGE: APIRoot + '/messages',
-  UPDATE_OPEN_CHAT_ID: APIRoot + '/messages',
+  GET_MESSAGE: APIRoot + '/messages',
   SEARCH_USERS: APIRoot + '/users/search',
   CREATE_FRIENDSHIPS: APIRoot + '/friendships',
   DELETE_FRIENDSHIPS: APIRoot + '/friendships/',

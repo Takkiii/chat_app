@@ -39,4 +39,26 @@ export default {
     //   timestamp: +new Date(),
     // })
   },
+
+  getMessages(userID) {
+    return new Promise((resolve, reject) => {
+      request
+      .get(`${APIEndpoints.GET_MESSAGE}`)
+      .query({
+        from_user_id: userID,
+      })
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.GET_MESSAGE,
+            json,
+          })
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
 }

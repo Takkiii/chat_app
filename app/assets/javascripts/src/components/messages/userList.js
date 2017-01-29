@@ -1,9 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import classNames from 'classnames'
-// import Utils from '../../utils'
 import UserStore from '../../stores/user'
-// import MessagesStore from '../../stores/messages'
 import UserAction from '../../actions/user'
 import MessagesAction from '../../actions/messages'
 import MessagesBox from '../../components/messages/messagesBox'
@@ -22,7 +20,9 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     const friendships = UserStore.getUsers()
+    const openChatID = UserStore.getOpenChatUserID()
     const allMessages = UserStore.getAllChats()
+    MessagesAction.getMessages(openChatID)
 
     const messageList = []
     _.each(allMessages, (message) => {
@@ -34,7 +34,7 @@ class UserList extends React.Component {
       })
     })
     return {
-      openChatID: UserStore.getOpenChatUserID(),
+      openChatID: openChatID,
       messageList: messageList,
       friendships: friendships,
     }
