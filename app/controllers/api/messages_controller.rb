@@ -19,8 +19,12 @@ class Api::MessagesController < ApplicationController
     @message = Message.new
     @message.from_user_id = current_user.id
     @message.to_user_id = params[:to_user_id]
-    @message.image = params[:image].read
-    p @message
+    @message.image = params[:image]
+    if @message.save
+      render json: @message
+    else
+      render json: @message.errors
+    end
   end
 
   private

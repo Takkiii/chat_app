@@ -46,13 +46,21 @@ class MessagesBox extends React.Component {
         'clear': true,
       })
 
-      return (
+      if (message.image.url === null) {
+        return (
           <li key={ message.id } className={ messageClasses }>
             <div className='message-box__item__contents'>
               { message.text }
             </div>
           </li>
         )
+      } else {
+        return (
+          <li key={ message.id } className={ messageClasses }>
+            <img src={ message.image.url } className='message-box__item__contents message-box__item__image'/>
+          </li>
+        )
+      }
     })
 
     // const lastMessage = this.state.messages[messagesLength - 1]
@@ -74,7 +82,7 @@ class MessagesBox extends React.Component {
           <ul className='message-box__list'>
             { messages }
           </ul>
-          <ReplyBox />,
+          <ReplyBox />
         </div>
       )
   }

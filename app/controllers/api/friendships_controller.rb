@@ -2,7 +2,11 @@ class Api::FriendshipsController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    render json: (@user.friends_of_from_user + @user.friends_of_to_user).to_json(:include => :messages)
+    if @user.friends.present?
+      render json: @user.friends.to_json(:include => :messages)
+    else
+      render json: [{ id: nil }]
+    end
   end
 
   def create
@@ -21,7 +25,11 @@ class Api::FriendshipsController < ApplicationController
       to_user_id: friendship_params[:to_user_id],
       from_user_id: current_user.id
     ).destroy
-    render json: @user.friends
+    if @user.friends.present?
+      render json: @user.friends
+    else
+      render json: [{ id: nil }]
+    end
   end
 
   private

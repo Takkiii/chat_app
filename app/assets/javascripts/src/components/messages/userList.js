@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import classNames from 'classnames'
 import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
@@ -21,21 +20,10 @@ class UserList extends React.Component {
   getStateFromStore() {
     const friendships = UserStore.getUsers()
     const openChatID = UserStore.getOpenChatUserID()
-    const allMessages = UserStore.getAllChats()
     MessagesAction.getMessages(openChatID)
 
-    const messageList = []
-    _.each(allMessages, (message) => {
-      const messagesLength = message.messages.length
-      messageList.push({
-        lastMessage: message.messages[messagesLength - 1],
-        lastAccess: message.lastAccess,
-        user: message.user,
-      })
-    })
     return {
       openChatID: openChatID,
-      messageList: messageList,
       friendships: friendships,
     }
   }
@@ -64,49 +52,43 @@ class UserList extends React.Component {
 
   render() {
     const {friendships, openChatID} = this.state
-    this.state.messageList.sort((a, b) => {
-      if (a.lastMessage.timestamp > b.lastMessage.timestamp) {
-        return -1
-      }
-      if (a.lastMessage.timestamp < b.lastMessage.timestamp) {
-        return 1
-      }
-      return 0
-    })
 
-    const friends_list = friendships.map((user, index) => {
-      const itemClasses = classNames({
-        'user-list__item': true,
-        'clear': true,
-        // 'user-list__item--new': isNewMessage,
-        'user-list__item--active': openChatID === user.id,
-      })
-      return (
-        <li
-          onClick={this.changeOpenChat.bind(this, user.id)}
-          className={ itemClasses }
-          key={ user.id }
-        >
-          <div
-            onClick={ this.deleteFriendships.bind(this, user.id) }
-            className='pull-right'
+    var friends_list = []
+    if (typeof (openChatID) === 'number') {
+      friends_list = friendships.map((user, index) => {
+        const itemClasses = classNames({
+          'user-list__item': true,
+          'clear': true,
+          // 'user-list__item--new': isNewMessage,
+          'user-list__item--active': openChatID === user.id,
+        })
+        return (
+          <li
+            onClick={this.changeOpenChat.bind(this, user.id)}
+            className={ itemClasses }
+            key={ user.id }
           >
-            <span
-              aria-hidden={true}
-              className='glyphicon glyphicon-remove'
-            ></span>
-          </div>
-          <div className='user-list__item__picture'>
-            <img src='/assets/images/default_image.jpg' />
-          </div>
-          <div className='user-list__item__details'>
-            <h4 className='user-list__item__name'>
-              { user.name }
-            </h4>
-          </div>
-        </li>
-      )
-    }, this)
+            <div
+              onClick={ this.deleteFriendships.bind(this, user.id) }
+              className='pull-right'
+            >
+              <span
+                aria-hidden={true}
+                className='glyphicon glyphicon-remove'
+              ></span>
+            </div>
+            <div className='user-list__item__picture'>
+              <img src='/assets/images/default_image.jpg' />
+            </div>
+            <div className='user-list__item__details'>
+              <h4 className='user-list__item__name'>
+                { user.name }
+              </h4>
+            </div>
+          </li>
+        )
+      }, this)
+    }
     // const messages = this.state.messageList.map((message, index) => {
     //   const date = Utils.getNiceDate(message.lastMessage.timestamp)
 
@@ -164,7 +146,7 @@ class UserList extends React.Component {
             { friends_list }
           </ul>
         </div>
-        <MessagesBox {...this.state} />,
+        <MessagesBox {...this.state} />
       </div>
     )
   }
