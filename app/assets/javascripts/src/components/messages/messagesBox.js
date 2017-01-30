@@ -33,12 +33,12 @@ class MessagesBox extends React.Component {
   }
 
   render() {
-    const currentUserID = this.props.openChatID
+    const {openChatUserID} = this.props
 
     const messages = this.state.messages.map((message, index) => {
       const messageClasses = classNames({
         'message-box__item': true,
-        'message-box__item--from-current': message.from_user_id !== currentUserID,
+        'message-box__item--from-current': message.from_user_id !== openChatUserID,
         'clear': true,
       })
 
@@ -58,34 +58,19 @@ class MessagesBox extends React.Component {
         )
       }
     })
-
-    // const lastMessage = this.state.messages[messagesLength - 1]
-
-    // if (lastMessage.from === currentUserID) {
-    //   if (this.state.lastAccess.recipient >= lastMessage.timestamp) {
-    //     const date = Utils.getShortDate(lastMessage.timestamp)
-    //     messages.push(
-    //         <li key='read' className='message-box__item message-box__item--read'>
-    //           <div className='message-box__item__contents'>
-    //             Read { date }
-    //           </div>
-    //         </li>
-    //       )
-    //   }
-    // }
     return (
         <div className='message-box'>
           <ul className='message-box__list'>
             { messages }
           </ul>
-          <ReplyBox />
+          <ReplyBox openChatUserID={openChatUserID} />
         </div>
       )
   }
 }
 
 MessagesBox.propTypes = {
-  openChatID: React.PropTypes.number,
+  openChatUserID: React.PropTypes.number,
 }
 
 export default MessagesBox

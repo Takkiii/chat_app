@@ -19,12 +19,11 @@ class UserList extends React.Component {
 
   getStateFromStore() {
     const friendships = UserStore.getUsers()
-    const openChatID = UserStore.getOpenChatUserID()
-    // openChatIDをpropsとして渡してMessagesBoxでアクション発火できないか
-    MessagesAction.getMessages(openChatID)
+    const openChatUserID = UserStore.getOpenChatUserID()
+    MessagesAction.getMessages(openChatUserID)
 
     return {
-      openChatID: openChatID,
+      openChatUserID: openChatUserID,
       friendships: friendships,
     }
   }
@@ -50,15 +49,15 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {friendships, openChatID} = this.state
+    const {friendships, openChatUserID} = this.state
 
     var friends_list = []
-    if (typeof (openChatID) === 'number') {
+    if (typeof (openChatUserID) === 'number') {
       friends_list = friendships.map((user, index) => {
         const itemClasses = classNames({
           'user-list__item': true,
           'clear': true,
-          'user-list__item--active': openChatID === user.id,
+          'user-list__item--active': openChatUserID === user.id,
         })
         return (
           <li
