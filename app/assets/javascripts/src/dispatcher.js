@@ -2,7 +2,7 @@ import {Dispatcher} from 'flux'
 import assign from 'object-assign'
 
 const appDispatcher = assign(new Dispatcher(), {
-  handleServiseAction(action) {
+  handleServerAction(action) {
     this.dispatch({
       source: 'server',
       action: action,
