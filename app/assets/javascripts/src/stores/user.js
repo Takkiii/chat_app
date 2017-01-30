@@ -52,6 +52,11 @@ User.dispatchToken = Dispatcher.register(payload => {
       User.setUsers(action.json)
       User.emitChange()
       break
+
+    case ActionTypes.UPDATE_OPEN_CHAT_ID:
+      User.setOpenChatUserID(action.userID)
+      User.emitChange()
+      break
   }
 
   return true

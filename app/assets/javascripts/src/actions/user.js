@@ -81,4 +81,10 @@ export default {
       })
     })
   },
+  changeOpenChat(newUserID) {
+    Dispatcher.handleViewAction({
+      type: ActionTypes.UPDATE_OPEN_CHAT_ID,
+      userID: newUserID,
+    })
+  },
 }
