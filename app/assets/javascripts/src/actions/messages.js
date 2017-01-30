@@ -26,12 +26,6 @@ export default {
         }
       })
     })
-    // Dispatcher.handleViewAction({
-    //   type: ActionTypes.SEND_MESSAGE,
-    //   userID: userID,
-    //   message: message,
-    //   timestamp: +new Date(),
-    // })
   },
   sendImage(userID, file) {
     return new Promise((resolve, reject) => {

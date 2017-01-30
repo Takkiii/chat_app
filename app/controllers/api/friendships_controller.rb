@@ -1,34 +1,30 @@
 class Api::FriendshipsController < ApplicationController
 
   def index
-    @user = User.find(current_user.id)
-    if @user.friends.present?
-      render json: @user.as_json(methods: 'friends')
+    if current_user.friends.present?
+      render json: { status: 200, user: current_user.as_json(methods: 'friends') }
     else
-      render json: { friends: [{ id: nil }] }
+      render json: { status: 400, user: nil }
     end
   end
 
   def create
-    @user = User.find(current_user.id)
-    @friendship = @user.friendships_of_from_user.build(friendship_params)
-    if @friendship.valid?
-      render json: @friendship.save
+    @friendship = current_user.friendships_of_from_user.build(friendship_params)
+    if @friendship.save
+      render json: { status: 200, friendship: @friendship }
     else
-      render json: @friendship.errors
+      render json: { status: 400, friendship: @friendship.errors }
     end
   end
 
   def destroy
-    @user = User.find(current_user.id)
-    Friendship.find_by(
-      to_user_id: friendship_params[:to_user_id],
-      from_user_id: current_user.id
-    ).destroy
-    if @user.friends.present?
-      render json: @user.friends
+    destroy_user = current_user
+      .friendships_of_from_user
+      .find_by(to_user_id: friendship_params[:to_user_id])
+    if destroy_user.destroy
+      render json: { status: 200, user: current_user.as_json(methods: 'friends') }
     else
-      render json: [{ id: nil }]
+      render json: { status: 400, user: current_user.as_json(methods: 'friends') }
     end
   end
 

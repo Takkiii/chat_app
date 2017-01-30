@@ -1,14 +1,18 @@
 class Api::MessagesController < ApplicationController
 
   def index
-    render json: Message.where('(from_user_id = ? and to_user_id = ?) or (from_user_id = ? and to_user_id = ?)', params[:from_user_id], current_user.id, current_user.id, params[:from_user_id]).order(:created_at).as_json
+    render json: (
+      Message.both_message(
+        params[:from_user_id],
+        current_user.id
+      )
+    )
   end
 
   def create
     @message = Message.new(message_params)
     @message.from_user_id = current_user.id
-    if @message.valid?
-      @message.save
+    if @message.save
       render json: @message
     else
       render json: @message.errors
