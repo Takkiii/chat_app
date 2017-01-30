@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
   def friends
     friends_of_from_user + friends_of_to_user
   end
+
+  def friend_by_id(user_id)
+    friendships_of_from_user.find_by(to_user_id: user_id)
+  end
 end

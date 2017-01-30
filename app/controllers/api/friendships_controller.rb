@@ -18,9 +18,7 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def destroy
-    destroy_user = current_user
-      .friendships_of_from_user
-      .find_by(to_user_id: friendship_params[:to_user_id])
+    destroy_user = current_user.friend_by_id(destroy_user_params)
     if destroy_user.destroy
       render json: { status: 200, user: current_user.as_json(methods: 'friends') }
     else
@@ -32,5 +30,9 @@ class Api::FriendshipsController < ApplicationController
 
   def friendship_params
     params.require(:friendship).permit(:to_user_id)
+  end
+
+  def destroy_user_params
+    ActionController::Parameters.new(params).permit(:to_user_id)
   end
 end

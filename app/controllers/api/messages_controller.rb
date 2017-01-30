@@ -22,10 +22,8 @@ class Api::MessagesController < ApplicationController
   end
 
   def upload_image
-    @message = Message.new
+    @message = Message.new(image_params)
     @message.from_user_id = current_user.id
-    @message.to_user_id = params[:to_user_id]
-    @message.image = params[:image]
     if @message.save
       render json: { status: 200, message: @message }
     else
@@ -37,5 +35,9 @@ class Api::MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:to_user_id, :text)
+  end
+
+  def image_params
+    ActionController::Parameters.new(params).permit(:to_user_id, :image)
   end
 end
