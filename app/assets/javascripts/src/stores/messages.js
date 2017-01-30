@@ -26,20 +26,20 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   switch (action.type) {
     case ActionTypes.SEND_MESSAGE:
       messages.push(
-        action.json,
+        action.json.message,
       )
       MessagesStore.emitChange()
       break
 
     case ActionTypes.SEND_IMAGE:
       messages.push(
-        action.json,
+        action.json.message,
       )
       MessagesStore.emitChange()
       break
 
     case ActionTypes.GET_MESSAGE:
-      MessagesStore.setMessages(action.json)
+      MessagesStore.setMessages(action.json.messages)
       MessagesStore.emitChange()
       break
   }
