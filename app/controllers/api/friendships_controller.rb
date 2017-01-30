@@ -3,9 +3,9 @@ class Api::FriendshipsController < ApplicationController
   def index
     @user = User.find(current_user.id)
     if @user.friends.present?
-      render json: @user.friends.to_json(:include => :messages)
+      render json: @user.as_json(methods: 'friends')
     else
-      render json: [{ id: nil }]
+      render json: { friends: [{ id: nil }] }
     end
   end
 

@@ -38,8 +38,8 @@ User.dispatchToken = Dispatcher.register(payload => {
       break
 
     case ActionTypes.GET_FRIENDSHIPS:
-      User.setOpenChatUserID(action.json[0].id)
-      User.setUsers(action.json)
+      User.setOpenChatUserID(action.json.friends[0].id)
+      User.setUsers(action.json.friends)
       User.emitChange()
       break
 

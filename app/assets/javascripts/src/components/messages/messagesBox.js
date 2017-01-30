@@ -2,7 +2,6 @@ import React from 'react'
 import classNames from 'classNames'
 import ReplyBox from '../../components/messages/replyBox'
 import MessagesStore from '../../stores/messages'
-import UserStore from '../../stores/user'
 
 class MessagesBox extends React.Component {
 
@@ -23,12 +22,10 @@ class MessagesBox extends React.Component {
 
   componentWillMount() {
     MessagesStore.onChange(this.onStoreChange.bind(this))
-    UserStore.onChange(this.onStoreChange.bind(this))
   }
 
   componentWillUnmount() {
     MessagesStore.offChange(this.onStoreChange.bind(this))
-    UserStore.offChange(this.onStoreChange.bind(this))
   }
 
   onStoreChange() {
@@ -36,8 +33,7 @@ class MessagesBox extends React.Component {
   }
 
   render() {
-    // const messagesLength = this.state.messages.length
-    const currentUserID = UserStore.getOpenChatUserID()
+    const currentUserID = this.props.openChatID
 
     const messages = this.state.messages.map((message, index) => {
       const messageClasses = classNames({
@@ -86,6 +82,10 @@ class MessagesBox extends React.Component {
         </div>
       )
   }
+}
+
+MessagesBox.propTypes = {
+  openChatID: React.PropTypes.number,
 }
 
 export default MessagesBox
