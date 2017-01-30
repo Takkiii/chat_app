@@ -11,8 +11,8 @@ export default {
         search_query,
       })
       .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
+        const json = JSON.parse(res.text)
+        if (!error && json.status === 200) {
           Dispatcher.handleServerAction({
             type: ActionTypes.SEARCH_USERS,
             json,
@@ -33,7 +33,8 @@ export default {
         to_user_id: userID,
       })
       .end((error, res) => {
-        if (!error && res.status === 200) {
+        const json = JSON.parse(res.text)
+        if (!error && json.status === 200) {
           var redirect_url = 'http://localhost:3000'
           location.href = redirect_url
         } else {
@@ -47,8 +48,8 @@ export default {
       request
       .get(`${APIEndpoints.GET_FRIENDSHIPS}`)
       .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
+        const json = JSON.parse(res.text)
+        if (!error && json.status === 200) {
           Dispatcher.handleServerAction({
             type: ActionTypes.GET_FRIENDSHIPS,
             json,
@@ -69,8 +70,8 @@ export default {
         to_user_id: userID,
       })
       .end((error, res) => {
-        if (!error && res.status === 200) {
-          const json = JSON.parse(res.text)
+        const json = JSON.parse(res.text)
+        if (!error && json.status === 200) {
           Dispatcher.handleServerAction({
             type: ActionTypes.DELETE_FRIENDSHIPS,
             json,
@@ -79,6 +80,12 @@ export default {
           reject(res)
         }
       })
+    })
+  },
+  changeOpenChat(newUserID) {
+    Dispatcher.handleViewAction({
+      type: ActionTypes.UPDATE_OPEN_CHAT_ID,
+      userID: newUserID,
     })
   },
 }

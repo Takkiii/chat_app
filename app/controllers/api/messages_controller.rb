@@ -1,29 +1,33 @@
 class Api::MessagesController < ApplicationController
 
   def index
-    render json: Message.where('(from_user_id = ? and to_user_id = ?) or (from_user_id = ? and to_user_id = ?)', params[:from_user_id], current_user.id, current_user.id, params[:from_user_id]).order(:created_at).as_json
+    messages = Message.both_message(
+      params[:from_user_id],
+      current_user.id
+    )
+    render json: {
+      status: 200,
+      messages: messages,
+    }
   end
 
   def create
     @message = Message.new(message_params)
     @message.from_user_id = current_user.id
-    if @message.valid?
-      @message.save
-      render json: @message
+    if @message.save
+      render json: { status: 200, message: @message }
     else
-      render json: @message.errors
+      render json: { status: 400, message: @message.errors }
     end
   end
 
   def upload_image
-    @message = Message.new
+    @message = Message.new(image_params)
     @message.from_user_id = current_user.id
-    @message.to_user_id = params[:to_user_id]
-    @message.image = params[:image]
     if @message.save
-      render json: @message
+      render json: { status: 200, message: @message }
     else
-      render json: @message.errors
+      render json: { status: 400, message: @message.errors }
     end
   end
 
@@ -31,5 +35,9 @@ class Api::MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:to_user_id, :text)
+  end
+
+  def image_params
+    ActionController::Parameters.new(params).permit(:to_user_id, :image)
   end
 end

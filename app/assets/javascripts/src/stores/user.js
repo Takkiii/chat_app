@@ -33,23 +33,28 @@ User.dispatchToken = Dispatcher.register(payload => {
 
   switch (action.type) {
     case ActionTypes.SEARCH_USERS:
-      User.setUsers(action.json)
+      User.setUsers(action.json.users)
       User.emitChange()
       break
 
     case ActionTypes.GET_FRIENDSHIPS:
-      User.setOpenChatUserID(action.json[0].id)
-      User.setUsers(action.json)
+      User.setOpenChatUserID(action.json.user.friends[0].id)
+      User.setUsers(action.json.user.friends)
       User.emitChange()
       break
 
     case ActionTypes.DELETE_FRIENDSHIPS:
-      if (action.json === []) {
+      if (!action.json.user.friends[0]) {
         User.setOpenChatUserID([])
       } else {
-        User.setOpenChatUserID(action.json[0].id)
+        User.setOpenChatUserID(action.json.user.friends[0].id)
       }
-      User.setUsers(action.json)
+      User.setUsers(action.json.user.friends)
+      User.emitChange()
+      break
+
+    case ActionTypes.UPDATE_OPEN_CHAT_ID:
+      User.setOpenChatUserID(action.userID)
       User.emitChange()
       break
   }

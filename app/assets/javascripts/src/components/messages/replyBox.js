@@ -1,5 +1,4 @@
 import React from 'react'
-import UserStore from '../../stores/user'
 import MessagesAction from '../../actions/messages'
 
 class ReplyBox extends React.Component {
@@ -17,7 +16,7 @@ class ReplyBox extends React.Component {
 
   handleKeyDown(e) {
     if (e.keyCode === 13) {
-      MessagesAction.sendMessage(UserStore.getOpenChatUserID(), this.state.value)
+      MessagesAction.sendMessage(this.props.openChatUserID, this.state.value)
       this.setState({
         value: '',
       })
@@ -34,7 +33,7 @@ class ReplyBox extends React.Component {
     const inputDOM = e.target
     if (!inputDOM.files.length) return
     const file = inputDOM.files[0]
-    MessagesAction.sendImage(UserStore.getOpenChatUserID(), file)
+    MessagesAction.sendImage(this.props.openChatUserID, file)
   }
 
   render() {
@@ -61,6 +60,10 @@ class ReplyBox extends React.Component {
       </div>
     )
   }
+}
+
+ReplyBox.propTypes = {
+  openChatUserID: React.PropTypes.number,
 }
 
 export default ReplyBox
