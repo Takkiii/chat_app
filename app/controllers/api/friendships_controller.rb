@@ -1,3 +1,4 @@
+# class直下の改行消す
 class Api::FriendshipsController < ApplicationController
 
   def index

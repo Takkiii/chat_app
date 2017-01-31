@@ -6,6 +6,7 @@ export default {
   searchUsers(search_query) {
     return new Promise((resolve, reject) => {
       request
+      // 変数展開する必要ない
       .get(`${APIEndpoints.SEARCH_USERS}`)
       .query({
         search_query,

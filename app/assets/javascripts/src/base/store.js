@@ -48,4 +48,3 @@ class BaseStore extends EventEmitter {
 }
 
 export default BaseStore
-
