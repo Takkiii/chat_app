@@ -21,22 +21,25 @@ const MessagesStore = new ChatStore()
 
 MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
-  var messages = MessagesStore.getMessages()
 
   switch (action.type) {
-    case ActionTypes.SEND_MESSAGE:
+    case ActionTypes.SEND_MESSAGE: {
+      const messages = MessagesStore.getMessages()
       messages.push(
         action.json.message,
       )
       MessagesStore.emitChange()
       break
+    }
 
-    case ActionTypes.SEND_IMAGE:
+    case ActionTypes.SEND_IMAGE: {
+      const messages = MessagesStore.getMessages()
       messages.push(
         action.json.message,
       )
       MessagesStore.emitChange()
       break
+    }
 
     case ActionTypes.GET_MESSAGE:
       MessagesStore.setMessages(action.json.messages)

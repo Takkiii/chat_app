@@ -1,5 +1,4 @@
 class Api::UsersController < ApplicationController
-
   def search
     query = params[:search_query].strip
     if query.present?

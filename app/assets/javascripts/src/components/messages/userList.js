@@ -4,6 +4,7 @@ import UserStore from '../../stores/user'
 import UserAction from '../../actions/user'
 import MessagesAction from '../../actions/messages'
 import MessagesBox from '../../components/messages/messagesBox'
+import _ from 'lodash'
 
 class UserList extends React.Component {
 
@@ -52,7 +53,7 @@ class UserList extends React.Component {
     const {friendships, openChatUserID} = this.state
 
     var friends_list = []
-    if (typeof (openChatUserID) === 'number') {
+    if (_.isNumber(openChatUserID)) {
       friends_list = friendships.map((user, index) => {
         const itemClasses = classNames({
           'user-list__item': true,
@@ -93,7 +94,7 @@ class UserList extends React.Component {
             { friends_list }
           </ul>
         </div>
-        <MessagesBox {...this.state} />
+        <MessagesBox openChatUserID={openChatUserID} />
       </div>
     )
   }
