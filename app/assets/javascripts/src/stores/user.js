@@ -37,21 +37,25 @@ User.dispatchToken = Dispatcher.register(payload => {
       User.emitChange()
       break
 
-    case ActionTypes.GET_FRIENDSHIPS:
-      User.setOpenChatUserID(action.json.user.friends[0].id)
-      User.setUsers(action.json.user.friends)
+    case ActionTypes.GET_FRIENDSHIPS: {
+      const user = action.json.user
+      User.setOpenChatUserID(user.friends[0].id)
+      User.setUsers(user.friends)
       User.emitChange()
       break
+    }
 
-    case ActionTypes.DELETE_FRIENDSHIPS:
-      if (!action.json.user.friends[0]) {
+    case ActionTypes.DELETE_FRIENDSHIPS: {
+      const user = action.json.user
+      if (!user.friends[0]) {
         User.setOpenChatUserID([])
       } else {
-        User.setOpenChatUserID(action.json.user.friends[0].id)
+        User.setOpenChatUserID(user.friends[0].id)
       }
-      User.setUsers(action.json.user.friends)
+      User.setUsers(user.friends)
       User.emitChange()
       break
+    }
 
     case ActionTypes.UPDATE_OPEN_CHAT_ID:
       User.setOpenChatUserID(action.userID)

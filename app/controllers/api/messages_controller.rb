@@ -1,5 +1,4 @@
 class Api::MessagesController < ApplicationController
-
   def index
     messages = Message.both_message(
       params[:from_user_id],

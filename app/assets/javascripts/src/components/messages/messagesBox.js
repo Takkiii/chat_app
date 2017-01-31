@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classNames'
 import ReplyBox from '../../components/messages/replyBox'
 import MessagesStore from '../../stores/messages'
+import _ from 'lodash'
 
 class MessagesBox extends React.Component {
 
@@ -42,9 +43,12 @@ class MessagesBox extends React.Component {
         'clear': true,
       })
 
-      if (message.image.url === null) {
+      if (!_.isString(message.image.url)) {
         return (
-          <li key={ message.id } className={ messageClasses }>
+          <li
+            key={ message.id }
+            className={ messageClasses }
+          >
             <div className='message-box__item__contents'>
               { message.text }
             </div>
@@ -52,8 +56,14 @@ class MessagesBox extends React.Component {
         )
       } else {
         return (
-          <li key={ message.id } className={ messageClasses }>
-            <img src={ message.image.url } className='message-box__item__contents message-box__item__image'/>
+          <li
+            key={ message.id }
+            className={ messageClasses }
+          >
+            <img
+              src={ message.image.url }
+              className='message-box__item__contents message-box__item__image'
+            />
           </li>
         )
       }

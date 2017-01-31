@@ -1,5 +1,4 @@
 class Api::FriendshipsController < ApplicationController
-
   def index
     if current_user.friends.present?
       render json: { status: 200, user: current_user.as_json(methods: 'friends') }
@@ -18,7 +17,7 @@ class Api::FriendshipsController < ApplicationController
   end
 
   def destroy
-    destroy_user = current_user.friend_by_id(destroy_user_params)
+    destroy_user = current_user.friend_by_id(destroy_user_params[:to_user_id])
     if destroy_user.destroy
       render json: { status: 200, user: current_user.as_json(methods: 'friends') }
     else
