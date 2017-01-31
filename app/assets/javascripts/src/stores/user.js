@@ -38,6 +38,7 @@ User.dispatchToken = Dispatcher.register(payload => {
       break
 
     case ActionTypes.GET_FRIENDSHIPS:
+      // const {user} = action.json
       User.setOpenChatUserID(action.json.user.friends[0].id)
       User.setUsers(action.json.user.friends)
       User.emitChange()

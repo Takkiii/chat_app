@@ -7,6 +7,7 @@ export default {
   sendMessage(userID, message) {
     return new Promise((resolve, reject) => {
       request
+      // 変数展開する必要ない
       .post(`${APIEndpoints.SEND_MESSAGE}`)
       .set('X-CSRF-Token', CSRFToken())
       .send({

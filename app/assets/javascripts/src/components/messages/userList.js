@@ -52,6 +52,7 @@ class UserList extends React.Component {
     const {friendships, openChatUserID} = this.state
 
     var friends_list = []
+    // _.isNumberが便利
     if (typeof (openChatUserID) === 'number') {
       friends_list = friendships.map((user, index) => {
         const itemClasses = classNames({

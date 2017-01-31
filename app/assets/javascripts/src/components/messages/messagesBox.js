@@ -42,6 +42,7 @@ class MessagesBox extends React.Component {
         'clear': true,
       })
 
+      // !_.isString(message.image.url)の方がundefinedも弾けていいかも
       if (message.image.url === null) {
         return (
           <li key={ message.id } className={ messageClasses }>
@@ -53,6 +54,14 @@ class MessagesBox extends React.Component {
       } else {
         return (
           <li key={ message.id } className={ messageClasses }>
+            {/*
+              めちゃ細かいけど、これくらいの長さでも
+              <img
+                src={ message.image.url }
+                className='message-box__item__contents message-box__item__image'
+              />
+              と書くのがProgate的にはいいかな
+            */}
             <img src={ message.image.url } className='message-box__item__contents message-box__item__image'/>
           </li>
         )
